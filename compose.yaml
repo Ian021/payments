@@ -1,21 +1,57 @@
-version: 2
+version: '2'
 
 services:
-  client:
+  paymentclient:
+    build: client
+    image: paymentclient
+    container_name: paymentclient
+    environment:
+      - PORT=3005
+    ports:
+      - 3005:3005
+    volumes:
+      - ./client:/app
 
   paymentserver:
+    build: paymentserver
+    image: paymentserver
+    container_name: paymentserver
+    volumes:
+      - ./paymentserver:/app
 
-  iamserver:
+  # iamserver:
+  #   build: iamserver
+  #   image: iamserver
+  #   container_name: iamserver
+  #   volumes:
+  #     - ./iamserver:/app
 
-  notificationserver:
+  # notificationserver:
+  #   build: notificationserver
+  #   image: notificationserver
+  #   container_name: notificationserver
+  #   volumes:
+  #     - ./notificationserver:/app
 
   paymentdb:
+    image: postgres
+    container_name: paymentdb
+    environment:
+      POSTGRES_PASSWORD: postgres
 
   iamdb:
+    image: postgres
+    container_name: iamdb
+    environment:
+      POSTGRES_PASSWORD: postgres
 
-  redis:
+  paymentredis:
+    container_name: paymentredis
+    image: redis
 
-  rabbit:
+  paymentrabbit:
+    container_name: paymentrabbit
+    image: rabbitmq
 
     # If your application exposes a port, uncomment the following lines and change
     # the port numbers as needed. The first number is the host port and the second
